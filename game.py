@@ -2,7 +2,6 @@ import random
 import arcade
 from spaceship import Spaceship
 from enemy import Enemy
-from bullet import Bullet
 
 class Game(arcade.Window):
     def __init__(self):
@@ -25,6 +24,8 @@ class Game(arcade.Window):
             self.me.center_x -= self.me.speed 
         elif symbol == arcade.key.D:
             self.me.center_x += self.me.speed
+        elif symbol == arcade.key.SPACE:
+            ...
             
     def on_update(self, delta_time: float):
 

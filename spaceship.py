@@ -1,5 +1,4 @@
 import arcade
-from bullet import Bullet
 
 class Spaceship(arcade.Sprite):
     def __init__(self, game):
@@ -12,7 +11,6 @@ class Spaceship(arcade.Sprite):
         self.height = 48
         self.speed = 8
         self.game_with = game.width
-        self.bullet_list = []
 
 
 
