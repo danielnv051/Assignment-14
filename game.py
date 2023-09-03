@@ -5,6 +5,7 @@ from arcade import Texture
 from spaceship import Spaceship
 from enemy import Enemy
 
+
 class Game(arcade.Window):
     def __init__(self):
         super().__init__(width=800, height=600, title="Interstellar")
@@ -18,7 +19,7 @@ class Game(arcade.Window):
             0, 0, self.width, self.height, self.background
         )
         self.me.draw()
-        
+
         for doshmanan in self.enemy_list:
             doshmanan.draw()
 
@@ -39,16 +40,16 @@ class Game(arcade.Window):
 
     def on_key_release(self, symbol: int, modifiers: int):
         self.me.change_x = 0
-            
-    def on_update(self, delta_time: float):
 
+    def on_update(self, delta_time: float):
         self.me.move()
+        
         for doshmana in self.enemy_list:
             doshmana.move()
             if arcade.check_for_collision(self.me, doshmana):
-                print('Game Over☠')
+                print("Game Over☠")
                 exit(0)
-            if doshmana.center_y<0:
+            if doshmana.center_y < 0:
                 self.enemy_list.remove(doshmana)
 
         for bullet in self.me.bullet_list:
@@ -57,9 +58,13 @@ class Game(arcade.Window):
         for doshmana in self.enemy_list:
             for bullet in self.me.bullet_list:
                 if arcade.check_for_collision(doshmana, bullet):
+                    
+                    fall_sound = arcade.load_sound(path=":resources:sounds/hit2.wav")
+                    arcade.play_sound(sound=fall_sound)
+
                     self.enemy_list.remove(doshmana)
                     self.me.bullet_list.remove(bullet)
 
-        if random.randint(1,50) == 6 :
+        if random.randint(1, 50) == 6:
             self.new_doshman = Enemy(self)
             self.enemy_list.append(self.new_doshman)
