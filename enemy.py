@@ -9,5 +9,8 @@ class Enemy(arcade.Sprite):
         self.width = 48
         self.height = 48
         self.angle = 180
-        self.speed = 6
+        self.speed = 5
+
+    def move(self):
+        self.center_y -=self.speed
 
