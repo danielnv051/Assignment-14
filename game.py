@@ -5,26 +5,12 @@ from arcade import Texture
 from spaceship import Spaceship
 from enemy import Enemy
 
-class Bullet(arcade.Sprite):
-    def __init__(self, host):
-        super().__init__(":resource:images/space_shooter/laserRed01.png")
-        self.center_x = host.center_x
-        self.center_y = host.center_y
-        self.speed = 6
-        self.change_x = 0
-        self.change_y = 1
-
-    def move(self):
-        self.center_y += self.speed
-
 class Game(arcade.Window):
     def __init__(self):
         super().__init__(width=800, height=600, title="Interstellar")
         self.background = arcade.load_texture(":resources:images/backgrounds/stars.png")
         self.me = Spaceship(self)
         self.doshmans = []
-
-        
 
     def on_draw(self):
         arcade.start_render()
@@ -35,6 +21,10 @@ class Game(arcade.Window):
         
         for doshmanan in self.doshmans:
             doshmanan.draw()
+
+            for bullet in self.me.bullet_list:
+                bullet.draw()
+
         arcade.finish_render()
 
     def on_key_press(self, symbol: int, modifiers: int):
@@ -45,7 +35,7 @@ class Game(arcade.Window):
         elif symbol == arcade.key.S:
             self.me.change_x = 0
         elif symbol == arcade.key.SPACE:
-            ...
+            self.me.fire()
 
     def on_key_release(self, symbol: int, modifiers: int):
         self.me.change_x = 0
@@ -54,11 +44,13 @@ class Game(arcade.Window):
 
         self.me.move()
         for doshmana in self.doshmans:
+            doshmana.move()
             if arcade.check_for_collision(self.me, doshmana):
                 print('Game Over☠')
                 exit(0)
 
-            doshmana.move()
+        for bullet in self.me.bullet_list:
+            bullet.move()
 
         if random.randint(1,50) == 6 :
             self.new_doshman = Enemy(self)

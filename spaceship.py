@@ -1,4 +1,5 @@
 import arcade
+from bullet import Bullet
 
 
 class Spaceship(arcade.Sprite):
@@ -21,3 +22,7 @@ class Spaceship(arcade.Sprite):
         elif self.change_x == 1:
             if self.center_x < self.game_with - 24:
                 self.center_x += self.speed
+
+    def fire(self):
+        new_bullet = Bullet(self)
+        self.bullet_list.append(new_bullet)
