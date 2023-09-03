@@ -10,7 +10,7 @@ class Game(arcade.Window):
         super().__init__(width=800, height=600, title="Interstellar")
         self.background = arcade.load_texture(":resources:images/backgrounds/stars.png")
         self.me = Spaceship(self)
-        self.doshmans = []
+        self.enemy_list = []
 
     def on_draw(self):
         arcade.start_render()
@@ -19,7 +19,7 @@ class Game(arcade.Window):
         )
         self.me.draw()
         
-        for doshmanan in self.doshmans:
+        for doshmanan in self.enemy_list:
             doshmanan.draw()
 
             for bullet in self.me.bullet_list:
@@ -43,15 +43,23 @@ class Game(arcade.Window):
     def on_update(self, delta_time: float):
 
         self.me.move()
-        for doshmana in self.doshmans:
+        for doshmana in self.enemy_list:
             doshmana.move()
             if arcade.check_for_collision(self.me, doshmana):
                 print('Game Over☠')
                 exit(0)
+            if doshmana.center_y<0:
+                self.enemy_list.remove(doshmana)
 
         for bullet in self.me.bullet_list:
             bullet.move()
 
+        for doshmana in self.enemy_list:
+            for bullet in self.me.bullet_list:
+                if arcade.check_for_collision(doshmana, bullet):
+                    self.enemy_list.remove(doshmana)
+                    self.me.bullet_list.remove(bullet)
+
         if random.randint(1,50) == 6 :
             self.new_doshman = Enemy(self)
-            self.doshmans.append(self.new_doshman)
+            self.enemy_list.append(self.new_doshman)
