@@ -26,3 +26,7 @@ class Spaceship(arcade.Sprite):
     def fire(self):
         new_bullet = Bullet(self)
         self.bullet_list.append(new_bullet)
+
+        arcade.play_sound(
+            sound=":resources:sounds/laser3.wav"
+        )
