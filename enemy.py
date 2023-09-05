@@ -14,3 +14,7 @@ class Enemy(arcade.Sprite):
     def move(self):
         self.center_y -=self.speed
 
+    def rise_speed(self):
+        self.speed+=1
+        print(self.speed)
+

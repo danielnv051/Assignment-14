@@ -29,10 +29,9 @@ class Spaceship(arcade.Sprite):
         new_bullet = Bullet(self)
         self.bullet_list.append(new_bullet)
 
-        fire_sound = arcade.load_sound(
-            path=self.fire_sound
-        )
-
         arcade.play_sound(
-            sound = fire_sound
+            sound = self.fire_sound
         )
+        
+    def bullet_rise_speed(self):
+        Bullet(self).rise_speed()
