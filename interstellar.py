@@ -6,4 +6,4 @@ from enemy import Enemy
 from game import Game
 
 window = Game() 
-arcade.run() 
+arcade.run()   
